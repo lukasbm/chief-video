@@ -1,0 +1,9 @@
+venv/
+videos/
+__pycache__/
+.idea/
+.vscode/
+
+
+*.swp
+*.pyc
