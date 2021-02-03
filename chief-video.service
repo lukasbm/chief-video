@@ -1,0 +1,11 @@
+[Unit]
+Description=ChiefVideo gunicorn web worker
+
+[Service]
+Type=simple
+WorkingDirectory=/home/chief/chief-video
+ExecStart=/home/chief/chief-video/venv/bin/gunicorn -b localhost:6600 --workers=3 --access-logfile /home/chief/chief-video/logs/log.txt --error-logfile /home/chief/chief-video/logs/errlog.txt app:app
+Restart=on-failure
+
+[Install]
+WantedBy=default.target

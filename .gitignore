@@ -3,7 +3,7 @@ videos/
 __pycache__/
 .idea/
 .vscode/
-
+logs/
 
 *.swp
 *.pyc

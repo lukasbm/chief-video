@@ -3,13 +3,11 @@ from datetime import datetime
 from flask import Flask, render_template, abort
 from dotenv import load_dotenv
 
-
 load_dotenv()
 
 app = Flask(__name__)
 
-video_path = os.getenv('VIDEO_LOCATION') or '/media/lukas/Share/Videos'
-
+video_path = os.getenv('VIDEO_LOCATION') or '/home/chief/chief-video/videos'
 
 @app.route('/')
 def dashboard():
