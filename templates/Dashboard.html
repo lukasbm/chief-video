@@ -1,0 +1,27 @@
+{% extends "BasePage.html" %}
+
+{% block content %}
+    {% for key, value in files.items() %}
+        <div class="row">
+            <h3>{{ key }}</h3>
+            {% for vid in value %}
+                <div class="col">
+                    <div class="border rounded p-4 h-100 shadow-sm">
+                        <h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
+                        <p class="card-text">
+                            Datum: {{ vid.date.strftime('%d.%m.%Y - %H:%M:%S') }}
+                        </p>
+                        <p class="card-text">
+                            Größe: {{ print_size(vid.size) }}
+                        </p>
+                        <a href="{{ url_for('video', fach=key, name=vid.name) }}">
+                            <button class="btn btn-lg btn-primary" type="button">
+                                Öffnen
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% endfor %}
+{% endblock content %}

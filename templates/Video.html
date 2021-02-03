@@ -1,0 +1,8 @@
+{% extends "BasePage.html" %}
+
+{% block content %}
+    <h1>{{ fach }}  -  {{ name }}</h1>
+    <video src="http://localhost:6600/video/{{ fach }}/{{ name }}" controls width="500">
+        Fallback, video kaputt.
+    </video>
+{% endblock content %}

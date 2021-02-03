@@ -1,5 +1,14 @@
 {% extends "Base.html" %}
 
+{% macro print_size(b) %}
+    {% if b < 1024*1024*1 %}
+        (&lt;1 MB)
+    {% else %}
+        ({{ b // (1024*1024) }} MB)
+    {% endif %}
+{% endmacro %}
+
+
 {% block page %}
     <!-- Navbar -->
     <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
@@ -7,7 +16,6 @@
     </div>
 
     <div class="container">
-        {% include 'include/messages.html' %}
         <!-- actual content -->
         {% block content %}
         {% endblock content %}
