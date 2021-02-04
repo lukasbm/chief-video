@@ -2,7 +2,12 @@
 
 {% block content %}
     <h1>{{ fach }}  -  {{ name }}</h1>
-    <video src="http://localhost:6600/video/{{ fach }}/{{ name }}" controls width="500">
-        Fallback, video kaputt.
-    </video>
+    <div class="row">
+        <video src="/video/{{ fach|safe }}/{{ name|safe }}" controls width="100%">
+            Fallback, video kaputt.
+        </video>
+    </div>
+    <div class="row">
+        <a href="/video/{{ fach }}/{{ name }}" download class="btn btn-block btn-primary">Download</a>
+    </div>
 {% endblock content %}
