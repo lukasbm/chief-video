@@ -20,15 +20,23 @@ def dashboard():
             struc[fach].append({
                 'date': datetime.fromtimestamp(os.path.getctime(p)),
                 'size': os.path.getsize(p),
-                'name': vid
+                'name': os.path.splitext(vid)[0],
+		        'file': vid
             })
 
     return render_template('Dashboard.html', files=struc)
 
 
-@app.route('/<string:fach>/<string:name>')
-def video(fach, name):
-    if os.path.exists(os.path.join(video_path, fach, name)):
-        return render_template('Video.html', fach=fach, name=name)
+@app.route('/<string:fach>/<string:vid>')
+def video(fach, vid):
+    p = os.path.join(video_path, fach, vid)
+    if os.path.exists(p):
+        return render_template('Video.html', vid={
+            'date': datetime.fromtimestamp(os.path.getctime(p)),
+            'size': os.path.getsize(p),
+            'name': os.path.splitext(vid)[0],
+            'file': vid,
+            'fach': fach
+        })
     else:
         abort(404)
