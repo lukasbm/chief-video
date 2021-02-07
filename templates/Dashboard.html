@@ -2,8 +2,9 @@
 
 {% block content %}
     {% for key, value in files.items() %}
-        <div class="row">
+        <div class="row py-4">
             <h3>{{ key }}</h3>
+            <hr>
             {% for row in value|batch(4) %}
                 <div class="row">
                     {% for vid in row %}

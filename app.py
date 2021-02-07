@@ -9,6 +9,7 @@ app = Flask(__name__)
 
 video_path = os.getenv('VIDEO_LOCATION') or '/home/chief/chief-video/videos'
 
+
 @app.route('/')
 def dashboard():
     struc = {}
@@ -21,7 +22,7 @@ def dashboard():
                 'date': datetime.fromtimestamp(os.path.getctime(p)),
                 'size': os.path.getsize(p),
                 'name': os.path.splitext(vid)[0],
-		        'file': vid
+                'file': vid
             })
 
     return render_template('Dashboard.html', files=struc)
