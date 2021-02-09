@@ -15,15 +15,19 @@ def dashboard():
     struc = {}
     for fach in os.scandir(video_path):
         if not fach.is_dir(): continue
-        struc[fach.name] = []
+
+        e = []
         for vid in os.scandir(fach.path):
             if not vid.is_file(): continue
-            struc[fach.name].append({
+
+            e.append({
                 'date': datetime.fromtimestamp(os.path.getctime(vid.path)),
                 'size': os.path.getsize(vid.path),
                 'name': os.path.splitext(vid.name)[0],
                 'file': vid.name
             })
+
+        struc[fach.name] = sorted(e, key=lambda ele: ele['name'])
 
     return render_template('Dashboard.html', files=struc)
 
