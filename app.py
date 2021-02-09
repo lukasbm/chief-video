@@ -41,9 +41,3 @@ def video(fach, vid):
         })
     else:
         abort(404)
-
-
-@app.route('/video/<string:fach>/<string:vid>')
-def video_file(fach, vid):
-    from flask import send_from_directory
-    return send_from_directory(directory=os.path.join(video_path, fach), filename=vid)
