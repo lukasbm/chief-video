@@ -2,12 +2,36 @@
 
 {% block content %}
     <h1>{{ vid.fach }}  -  {{ vid.name }}</h1>
-    <div class="row">
-        <video src="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}" controls width="100%">
+
+    <section class="row">
+        <video
+                id="my-video"
+                controls
+                src="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}"
+                width="100%"
+        >
             Fallback, video kaputt.
         </video>
-    </div>
-    <div class="row">
+    </section>
+
+    <section class="row">
+        <p>
+            Geschwindigkeit: <code id="playback-speed-label">1</code>x
+        </p>
+        <input type="range" class="form-range" min="0.5" max="3" step="0.1" value="1.0" id="playback-speed">
+    </section>
+
+    <section class="row">
         <a href="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}" download class="btn btn-block btn-primary">Download</a>
-    </div>
+    </section>
+
+    <script>
+        const slider = document.getElementById("playback-speed");
+        const video = document.getElementById("my-video");
+        const speed_label = document.getElementById("playback-speed-label");
+        slider.oninput = function() {
+            video.playbackRate = this.value;
+            speed_label.innerText = this.value;
+        }
+    </script>
 {% endblock content %}
