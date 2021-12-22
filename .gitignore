@@ -10,6 +10,6 @@ logs/
 
 # data
 videos/
-videos-backup/
+video/
 .htpasswd
 

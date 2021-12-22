@@ -3,6 +3,8 @@ root = true
 [*]
 insert_final_newline = true
 trim_trailing_whitespace = true
+quote_type = double
+single_quote = false
 
 [*.py]
 indent_size = 4
