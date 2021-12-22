@@ -7,22 +7,30 @@ Simple website for videos playing hosted videos
 ### Native
 
 #### Simple development HTTP server
+
 we can provide a simple http server by changing into the video directory and call `python3 -m http.server`
 
 #### Simple flask server
+
 by running `python3 -m flask run` we can start a simple development server for the web app
 
 ### Docker
+
 TODO
+
 ```bash
 docker build -t chief-video:latest .
 ```
 
 ## Deploying
 
+The docker deployment is recommended.
+
 ### Native
+
 The following assumes a linux server with systemd, nginx and python3 installed.
 First you have to adapt the `chief-video.server` and `chief-video.conf` to your liking and update paths as neccecary.
+
 ```bash
 pip3 install gunicorn
 sudo ln -s ./chief-video.service /etc/systemd/system/chief-video.service
@@ -36,10 +44,10 @@ sudo systemctl reload nginx
 
 ```bash
 docker pull boehmls/chief-video:latest
-docker run --name chief-video -v <VIDEO_FOLDER>:/app/videos -p <PORT>:5000 boehmls/chief-video:latest
+docker run --name chief-video -v <VIDEO_LOCATION>:/app/videos -p <PORT>:5000 -e "VIDEO_URL=<VIDEO_URL>" boehmls/chief-video:latest
 ```
 
-where `<VIDEO_FOLDER>` is the directory on the host system. This variable is usually also the same as the `VIDEO_LOCATION` env variable
+where `<VIDEO_LOCATION>` and `<VIDEO_URL>` are the same as the env variable variables in the "Environment Variables" section below.
 
 ## Directory
 
@@ -57,5 +65,6 @@ The video directory has to be structured as follows:
 ```
 
 ## Environment Variables
+
 - `VIDEO_LOCATION`: the (absolute) path on the server where the videos are located. Default `./videos`
-- `VIDEO_URL`: the base url to videos. Since the flask app does not provide the videos themselves, we need another HTTP server to do this job. This variable needs to provide the resources in the same tree structure as presented in the directory section.
+- `VIDEO_URL`: the base url to videos. Since the flask app does not provide the videos themselves, we need another HTTP server to do this job. This variable needs to provide the resources in the same tree structure as presented in the directory section. Either has to be a relative path or a full url (including the "http://")
