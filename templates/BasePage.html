@@ -1,41 +1,46 @@
-{% extends "Base.html" %}
+{% extends "Base.html" %} {% macro print_size(b) %} {% if b < 1024*1024*1 %}
+(&lt;1 MB) {% else %} ({{ b // (1024*1024) }} MB) {% endif %} {% endmacro %} {%
+block page %}
+<!-- Navbar -->
+<div
+	class="
+		d-flex
+		flex-column flex-md-row
+		align-items-center
+		p-3
+		px-md-4
+		mb-3
+		bg-white
+		border-bottom
+		shadow-sm
+	"
+>
+	<a href="/" class="nav-link">
+		<h5 class="my-0 mr-md-auto font-weight-normal">ChiefVideo</h5>
+	</a>
+</div>
 
-{% macro print_size(b) %}
-    {% if b < 1024*1024*1 %}
-        (&lt;1 MB)
-    {% else %}
-        ({{ b // (1024*1024) }} MB)
-    {% endif %}
-{% endmacro %}
-
-
-{% block page %}
-    <!-- Navbar -->
-    <div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
-        <a href="/" class="nav-link">
-            <h5 class="my-0 mr-md-auto font-weight-normal">ChiefVideo</h5>
-        </a>
-    </div>
-
-    <div class="container">
- 	<div class="alert alert-info" role="alert">
-	    Beachten Sie, dass Firefox das Videoformat nicht unterstüzt! Nutzen sie Erweiterungen oder Chrome/Edge/Safari
+<div class="container">
+	<div class="alert alert-info" role="alert">
+		Beachten Sie, dass Firefox das Videoformat nicht unterstüzt! Nutzen sie
+		Erweiterungen oder Chrome/Edge/Safari
 	</div>
 	<div class="alert alert-info" role="alert">
-	    Alternativ: Rechtsclick auf das Videofeld -> "Videoadresse kopieren" -> In VLC (Strg+N) öffnen 
+		Alternativ: Rechtsclick auf das Videofeld -> "Videoadresse kopieren" -> In
+		VLC (Strg+N) öffnen
 	</div>
 
 	<!-- actual content -->
-        {% block content %}
-        {% endblock content %}
-        <!-- end actual content -->
-    </div>
+	{% block content %} {% endblock content %}
+	<!-- end actual content -->
+</div>
 
-
-    <!-- Footer -->
-    <footer class="pt-4 my-md-5 pt-md-5 border-top">
-        <div class="footer-copyright text-center py-3">
-            <small class="d-block mb-3 text-muted text-center">Chief Corporation &copy; 2020</small>
-        </div>
-    </footer>
+<!-- Footer -->
+<footer class="pt-4 my-md-5 pt-md-5 border-top">
+	<div class="footer-copyright text-center py-3">
+		<small class="d-block mb-3 text-muted text-center"
+			>Chief Corporation &copy; 2020</small
+		>
+	</div>
+</footer>
 {% endblock page %}

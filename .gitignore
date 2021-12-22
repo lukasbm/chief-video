@@ -8,9 +8,7 @@ logs/
 *.pyc
 .env
 
-
-
-# daten
+# data
 videos/
 videos-backup/
 .htpasswd

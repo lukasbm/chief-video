@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 #from ffprobe import FFProbe
 #from ffprobe.exceptions import FFProbeError
 
+
 def convert_time(seconds):
     hours = seconds // 3600
     seconds %= 3600
@@ -16,7 +17,6 @@ def convert_time(seconds):
 load_dotenv()
 
 app = Flask(__name__)
-
 video_path = os.getenv('VIDEO_LOCATION') or '/home/chief/chief-video/videos'
 
 
@@ -24,11 +24,13 @@ video_path = os.getenv('VIDEO_LOCATION') or '/home/chief/chief-video/videos'
 def dashboard():
     struc = {}
     for fach in os.scandir(video_path):
-        if not fach.is_dir(): continue
+        if not fach.is_dir():
+            continue
 
         e = []
         for vid in os.scandir(fach.path):
-            if not vid.is_file(): continue
+            if not vid.is_file():
+                continue
 
 #            vid_data = FFProbe(vid.path)
 #            duration = None
@@ -38,13 +40,12 @@ def dashboard():
 #                except FFProbeError as err:
 #                    print(err)
 
-
             e.append({
                 'date': datetime.fromtimestamp(os.path.getctime(vid.path)),
                 'size': os.path.getsize(vid.path),
                 'name': os.path.splitext(vid.name)[0],
                 'file': vid.name,
-#                'duration': duration
+                #                'duration': duration
             })
 
         struc[fach.name] = sorted(e, key=lambda ele: ele['name'])
