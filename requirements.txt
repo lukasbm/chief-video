@@ -1,3 +1,2 @@
 Flask
 python-dotenv
-ffprobe-python

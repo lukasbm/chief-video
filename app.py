@@ -2,22 +2,13 @@ import os
 from datetime import datetime
 from flask import Flask, render_template, abort
 from dotenv import load_dotenv
-#from ffprobe import FFProbe
-#from ffprobe.exceptions import FFProbeError
-
-
-def convert_time(seconds):
-    hours = seconds // 3600
-    seconds %= 3600
-    mins = seconds // 60
-    seconds %= 60
-    return hours, mins, seconds
-
 
 load_dotenv()
 
 app = Flask(__name__)
-video_path = os.getenv('VIDEO_LOCATION') or '/home/chief/chief-video/videos'
+#app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
+
+video_path = os.getenv('VIDEO_LOCATION') or './videos'
 
 
 @app.route('/')
@@ -32,20 +23,11 @@ def dashboard():
             if not vid.is_file():
                 continue
 
-#            vid_data = FFProbe(vid.path)
-#            duration = None
-#            for stream in vid_data.streams:
-#                try:
-#                    durations = convert_time(int(stream.duration_seconds()))
-#                except FFProbeError as err:
-#                    print(err)
-
             e.append({
                 'date': datetime.fromtimestamp(os.path.getctime(vid.path)),
                 'size': os.path.getsize(vid.path),
                 'name': os.path.splitext(vid.name)[0],
                 'file': vid.name,
-                #                'duration': duration
             })
 
         struc[fach.name] = sorted(e, key=lambda ele: ele['name'])

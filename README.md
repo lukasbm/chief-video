@@ -1,4 +1,4 @@
-# chief-video
+# ChiefVideo
 
 Simple website for videos playing hosted videos
 
