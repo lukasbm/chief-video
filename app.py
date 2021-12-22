@@ -8,6 +8,7 @@ load_dotenv()
 app = Flask(__name__)
 
 video_path = os.getenv('VIDEO_LOCATION') or './videos'
+video_url = os.getenv('VIDEO_URL') or '/videos'
 
 
 @app.route('/')
@@ -43,7 +44,8 @@ def video(fach, vid):
             'size': os.path.getsize(p),
             'name': os.path.splitext(vid)[0],
             'file': vid,
-            'fach': fach
+            'fach': fach,
+            'url': f"{video_url}/{fach}/{vid}"
         })
     else:
         abort(404)
