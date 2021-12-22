@@ -1,5 +1,4 @@
-{% extends "BasePage.html" %} {% block content %} {% for key, value in
-files.items() %}
+{% extends "BasePage.html" %} {% block content %} {% for key, value in files.items() %}
 <div class="row py-4">
 	<h3>{{ key }}</h3>
 	<hr />
@@ -9,9 +8,7 @@ files.items() %}
 		<section class="col">
 			<div class="border rounded p-4 h-100 shadow-sm">
 				<h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
-				<p class="card-text">
-					Datum: {{ vid.date.strftime('%d.%m.%Y - %H:%M:%S') }}
-				</p>
+				<p class="card-text">Datum: {{ vid.date.strftime('%d.%m.%Y - %H:%M:%S') }}</p>
 				<p class="card-text">Größe: {{ print_size(vid.size) }}</p>
 				<a href="{{ url_for('video', fach=key, vid=vid.file) }}">
 					<button class="btn btn-lg btn-primary" type="button">Öffnen</button>

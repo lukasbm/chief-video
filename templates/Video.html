@@ -2,36 +2,16 @@
 <h1>{{ vid.fach }} - {{ vid.name }}</h1>
 
 <section class="row">
-	<video
-		id="my-video"
-		controls
-		src="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}"
-		width="100%"
-	>
-		Fallback, video kaputt.
-	</video>
+	<video id="my-video" controls src="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}" width="100%">Fallback, video kaputt.</video>
 </section>
 
 <section class="row">
 	<p>Geschwindigkeit: <code id="playback-speed-label">1.0</code> &times;</p>
-	<input
-		type="range"
-		class="form-range"
-		min="0.5"
-		max="3"
-		step="0.1"
-		value="1.0"
-		id="playback-speed"
-	/>
+	<input type="range" class="form-range" min="0.5" max="3" step="0.1" value="1.0" id="playback-speed" />
 </section>
 
 <section class="row">
-	<a
-		href="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}"
-		download
-		class="btn btn-block btn-primary"
-		>Download</a
-	>
+	<a href="/video/{{ vid.fach|safe }}/{{ vid.file|safe }}" download class="btn btn-block btn-primary">Download</a>
 </section>
 
 <script>

@@ -32,7 +32,7 @@ where `<VIDEO_FOLDER>` is the directory on the host system.
 
 ## Directory
 
-The directory has to be structured as follows:
+The video directory has to be structured as follows:
 
 ```
 . // video root
