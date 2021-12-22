@@ -1,0 +1,13 @@
+venv/
+__pycache__/
+.idea/
+.vscode/
+logs/
+
+*.swp
+*.pyc
+
+# data
+videos/
+videos-backup/
+.htpasswd
