@@ -11,8 +11,7 @@ TODO
 ### Docker
 
 ```bash
-docker build -t my-python-app .
-docker run -it --rm --name my-running-app my-python-app
+docker build -t chief-video:latest .
 ```
 
 ## Deploying
@@ -25,7 +24,7 @@ TODO
 
 ```bash
 docker pull boehmls/chief-video:latest
-docker run --name chief-video boehmls/chief-video:latest -v <VIDEO_FOLDER>:/app/videos
+docker run --name chief-video -v <VIDEO_FOLDER>:/app/videos -p <PORT>:5000 boehmls/chief-video:latest
 ```
 
 where `<VIDEO_FOLDER>` is the directory on the host system.

@@ -6,7 +6,6 @@ from dotenv import load_dotenv
 load_dotenv()
 
 app = Flask(__name__)
-#app.config['SECRET_KEY'] = os.getenv("SECRET_KEY")
 
 video_path = os.getenv('VIDEO_LOCATION') or './videos'
 
