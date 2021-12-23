@@ -76,3 +76,4 @@ The video directory has to be structured as follows:
 - [ ] configuration files (to possibly exclude some files or set other information)
 - [ ] search functionality
 - [ ] Live streaming
+- [ ] allowing to use a remote vide directory
