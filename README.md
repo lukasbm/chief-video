@@ -77,3 +77,6 @@ The video directory has to be structured as follows:
 - [ ] search functionality
 - [ ] Live streaming
 - [ ] allowing to use a remote vide directory
+- [ ] show videolength (using ffmpeg - ffprobe)
+- [ ] converter for new video files (as not all video formats are supported in every browser)
+- [ ] update design

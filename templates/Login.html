@@ -1,0 +1,27 @@
+{% extends "BasePage.html" %}
+
+{% block content %}
+<div class="container">
+	<div class="card">
+		<div class="card-body">
+			<h3 class="card-title">Login</h3>
+			<p class="card-text">
+				<form method="POST" action="/login">
+					{{ form.csrf_token }}
+					{{ form.password.label }}
+					{{ form.password(size=30, class="form-control") }}
+					{{ form.submit(class="btn btn-primary") }}
+				</form>
+				<!-- TODO Show flashed messages -->
+				{% if form.errors %}
+					<ul class="errors">
+					{% for error in form.errors %}
+						<li>{{ error }}</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+			</p>
+		</div>
+	</div>
+</div>
+{% endblock content %}

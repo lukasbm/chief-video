@@ -1,6 +1,11 @@
 {% extends "BasePage.html" %} {% block content %}
 <h1>{{ vid.fach }} - {{ vid.name }}</h1>
 
+
+<div class="alert alert-info" role="alert">Beachten Sie, dass Firefox nicht jedes Videoformat nicht unterstüzt! Nutzen sie Erweiterungen oder Chrome/Edge/Safari</div>
+<div class="alert alert-info" role="alert">Alternativ: Rechtsclick auf das Videofeld -> "Videoadresse kopieren" -> In VLC (Strg+N) öffnen</div>
+
+
 <section class="row">
 	<video id="my-video" controls src="{{ vid.url|safe }}" width="100%">Fallback, video kaputt.</video>
 </section>

@@ -1,14 +1,25 @@
 import os
 from datetime import datetime
-from flask import Flask, render_template, abort
+from flask import Flask, render_template, abort, redirect, flash
 from dotenv import load_dotenv
+from flask_wtf import FlaskForm
+from wtforms.fields.simple import PasswordField, SubmitField
+from wtforms.validators import DataRequired
 
 load_dotenv()
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 
 video_path = os.getenv('VIDEO_LOCATION') or './videos'
 video_url = os.getenv('VIDEO_URL') or '/videos'
+username = os.getenv('USERNAME')
+password = os.getenv('PASSWORD')
+
+
+class LoginForm(FlaskForm):
+    password = PasswordField(label="Passwort eingeben", validators=[DataRequired()])
+    submit = SubmitField(label="Einloggen")
 
 
 @app.route('/')
@@ -45,7 +56,22 @@ def video(fach, vid):
             'name': os.path.splitext(vid)[0],
             'file': vid,
             'fach': fach,
-            'url': f"{video_url}/{fach}/{vid}"
+            #            'url': f"{video_url}/{fach}/{vid}" if password and username else f"{video_url}/{fach}/{vid}"
         })
     else:
         abort(404)
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return redirect('dashboard')
+    else:
+        flash("Falsches Passwort")
+        return render_template("Login.html", form=form)
+
+
+@app.route('/logout')
+def logout():
+    pass
