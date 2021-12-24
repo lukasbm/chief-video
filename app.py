@@ -26,8 +26,9 @@ Session(app)
 
 VIDEO_PATH = os.getenv('VIDEO_LOCATION') or './videos'
 VIDEO_URL = os.getenv('VIDEO_URL') or '/videos'
-USERNAME = os.getenv('USERNAME')
-PASSWORD = os.getenv('PASSWORD')
+VIDEO_USERNAME = os.getenv('VIDEO_USERNAME')
+VIDEO_PASSWORD = os.getenv('VIDEO_PASSWORD')
+LOGIN_PASSWORD = os.getenv('LOGIN_PASSWORD')
 
 
 @app.context_processor
@@ -68,7 +69,12 @@ def login_required(func):
 ####### ROUTES #######
 ######################
 
+
 @app.route('/')
+def index():
+    return render_template("Index.html")
+
+
 @app.route("/videos")
 @login_required
 def videos():
@@ -99,11 +105,11 @@ def videos():
 def video(fach, vid):
     p = os.path.join(VIDEO_PATH, fach, vid)
 
-    if USERNAME and PASSWORD:
+    if VIDEO_USERNAME and VIDEO_PASSWORD:
         url = VIDEO_URL.split("://")
         if len(url) != 2:
             abort(500)
-        url = f"{url[0]}://{USERNAME}:{PASSWORD}@{url[1]}/{fach}/{vid}"
+        url = f"{url[0]}://{VIDEO_USERNAME}:{VIDEO_PASSWORD}@{url[1]}/{fach}/{vid}"
     else:
         url = f"{VIDEO_URL}/{fach}/{vid}"
 
@@ -134,7 +140,7 @@ def streams():
 def login():
     form = LoginForm()
     if form.validate_on_submit():
-        if form.password.data == PASSWORD:
+        if form.password.data == LOGIN_PASSWORD:
             session["authenticated"] = True
             flash("Erfolgreich angemeldet")
             return redirect("/")
