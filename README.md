@@ -43,11 +43,12 @@ sudo systemctl reload nginx
 
 ```bash
 docker pull boehmls/chief-video:latest
-docker run --name chief-video -v <VIDEO_LOCATION>:/app/videos -p <PORT>:5000 -e "VIDEO_URL=<VIDEO_URL>" boehmls/chief-video:latest
+docker run --name chief-video -v <VIDEO_PATH>:/app/videos -p <PORT>:5000 --env-file <ENV_FILE>  boehmls/chief-video:latest
 ```
 
-where `<VIDEO_LOCATION>` and `<VIDEO_URL>` are the same as the env variable variables in the "Environment Variables" section below.
+where `<VIDEO_PATH>` is the absolute path to the video directory.
 The `<PORT>` can be any of your choice. Note that the port is only for the docker process running on the localhost. You still have to forward it using a reverse proxy like nginx.
+Then we need to pass the environment variables. We can do this by hand or use an `.env` file like `<ENV_FILE>`.
 
 ## Directory
 
@@ -68,10 +69,14 @@ The video directory has to be structured as follows:
 
 - `VIDEO_LOCATION`: the (absolute) path on the server where the videos are located. Default `./videos`
 - `VIDEO_URL`: the base url to videos. Since the flask app does not provide the videos themselves, we need another HTTP server to do this job. This variable needs to provide the resources in the same tree structure as presented in the directory section. Either has to be a relative path or a full url (including the "http://")
+- `SECRET_KEY`: required by flask to use secure sessions
+- `LOGIN_PASSWORD`: password for the website
+- `VIDEO_USERNAME` and `VIDEO_PASSWORD`: are the http basic auth information for the video streaming server. Can be omitted if not neccecary
 
 ## Roadmap
 
-- [X] better authentication (not just basic http)
+- [x] better authentication (not just basic http)
+- [ ] option to setup without a website password
 - [ ] Live streaming
 - [ ] video upload (in website)
 - [ ] configuration files (to possibly exclude some files or set other information)
