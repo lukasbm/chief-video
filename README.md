@@ -71,11 +71,11 @@ The video directory has to be structured as follows:
 
 ## Roadmap
 
-- [ ] better authentication (not just basic http)
+- [X] better authentication (not just basic http)
+- [ ] Live streaming
 - [ ] video upload (in website)
 - [ ] configuration files (to possibly exclude some files or set other information)
 - [ ] search functionality
-- [ ] Live streaming
 - [ ] allowing to use a remote vide directory
 - [ ] show videolength (using ffmpeg - ffprobe)
 - [ ] converter for new video files (as not all video formats are supported in every browser)

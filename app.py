@@ -29,6 +29,7 @@ VIDEO_URL = os.getenv('VIDEO_URL') or '/videos'
 USERNAME = os.getenv('USERNAME')
 PASSWORD = os.getenv('PASSWORD')
 
+
 @app.context_processor
 def set_context():
     def current_authentication():
@@ -38,7 +39,7 @@ def set_context():
         except KeyError:
             print("P????")
             return False
-    return { "authenticated": current_authentication() }
+    return {"authenticated": current_authentication()}
 
 ######################
 ######## UTIL ########
@@ -68,6 +69,8 @@ def login_required(func):
 ######################
 
 
+@app.route("/dashboard")
+@app.route("/videos")
 @app.route('/')
 @login_required
 def dashboard():
@@ -118,6 +121,16 @@ def video(fach, vid):
     else:
         abort(404)
 
+
+@app.route("/streams")
+@login_required
+def streams():
+    return render_template("Streams.html")
+
+
+########################
+#### UTILITY ROUTES ####
+########################
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
