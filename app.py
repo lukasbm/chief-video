@@ -8,6 +8,7 @@ from wtforms.fields.simple import PasswordField, SubmitField
 from wtforms.validators import DataRequired
 from flask_session import Session
 from datetime import timedelta
+import werkzeug.exceptions
 
 ######################
 ######## SETUP #######
@@ -97,9 +98,13 @@ def dashboard():
 def video(fach, vid):
     p = os.path.join(VIDEO_PATH, fach, vid)
 
-    url = VIDEO_URL.split("://")
-    url = f"{url[0]}://{USERNAME}:{PASSWORD}@{url[1]}"
-    print(url)
+    if USERNAME and PASSWORD:
+        url = VIDEO_URL.split("://")
+        if len(url) != 2:
+            abort(500)
+        url = f"{url[0]}://{USERNAME}:{PASSWORD}@{url[1]}/{fach}/{vid}"
+    else:
+        url = f"{VIDEO_URL}/{fach}/{vid}"
 
     if os.path.exists(p) and os.path.isfile(p):
         return render_template('Video.html', vid={
@@ -134,3 +139,9 @@ def logout():
     except KeyError:
         pass
     return redirect(url_for("dashboard"))
+
+
+@app.errorhandler(werkzeug.exceptions.HTTPException)
+def handle_http_error(e):
+    print(str(e))
+    return render_template("Error.html", e=e)
