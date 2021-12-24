@@ -28,6 +28,17 @@ VIDEO_URL = os.getenv('VIDEO_URL') or '/videos'
 USERNAME = os.getenv('USERNAME')
 PASSWORD = os.getenv('PASSWORD')
 
+@app.context_processor
+def set_context():
+    def current_authentication():
+        try:
+            print(session["authenticated"])
+            return session["authenticated"]
+        except KeyError:
+            print("P????")
+            return False
+    return { "authenticated": current_authentication() }
+
 ######################
 ######## UTIL ########
 ######################
@@ -41,10 +52,10 @@ class LoginForm(FlaskForm):
 
 def login_required(func):
     @functools.wraps(func)
-    def wrapper():
+    def wrapper(*args, **kwargs):
         try:
             if session["authenticated"] == True:
-                return func()
+                return func(*args, **kwargs)
             else:
                 return redirect(url_for("login"))
         except KeyError:
@@ -105,7 +116,6 @@ def video(fach, vid):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    session["authenticated"] = True
     form = LoginForm()
     if form.validate_on_submit():
         if form.password.data == PASSWORD:
@@ -123,3 +133,4 @@ def logout():
         session["authenticated"] = False
     except KeyError:
         pass
+    return redirect(url_for("dashboard"))
