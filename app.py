@@ -68,12 +68,10 @@ def login_required(func):
 ####### ROUTES #######
 ######################
 
-
-@app.route("/dashboard")
-@app.route("/videos")
 @app.route('/')
+@app.route("/videos")
 @login_required
-def dashboard():
+def videos():
     struc = {}
     for fach in os.scandir(VIDEO_PATH):
         if not fach.is_dir():
@@ -93,7 +91,7 @@ def dashboard():
 
         struc[fach.name] = sorted(e, key=lambda ele: ele['name'])
 
-    return render_template('Dashboard.html', files=struc)
+    return render_template('Videos.html', files=struc)
 
 
 @app.route('/<string:fach>/<string:vid>')
@@ -139,7 +137,7 @@ def login():
         if form.password.data == PASSWORD:
             session["authenticated"] = True
             flash("Erfolgreich angemeldet")
-            return redirect(url_for('dashboard'))
+            return redirect("/")
         else:
             flash("Falsches Passwort")
     return render_template("Login.html", form=form)
@@ -151,7 +149,7 @@ def logout():
         session["authenticated"] = False
     except KeyError:
         pass
-    return redirect(url_for("dashboard"))
+    return redirect("/")
 
 
 @app.errorhandler(werkzeug.exceptions.HTTPException)
