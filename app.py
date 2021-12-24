@@ -1,13 +1,13 @@
+import functools
 import os
 from datetime import datetime
-from flask import Flask, render_template, abort, redirect, flash, url_for
+from flask import Flask, render_template, abort, redirect, flash, url_for, session
 from dotenv import load_dotenv
-from flask_login.utils import login_required, logout_user
 from flask_wtf import FlaskForm
 from wtforms.fields.simple import PasswordField, SubmitField
 from wtforms.validators import DataRequired
-from flask_login import LoginManager, UserMixin, login_user, current_user
-
+from flask_session import Session
+from datetime import timedelta
 
 ######################
 ######## SETUP #######
@@ -17,12 +17,11 @@ from flask_login import LoginManager, UserMixin, login_user, current_user
 load_dotenv()
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+app.secret_key = os.getenv('SECRET_KEY')
+app.config["SESSION_TYPE"] = "filesystem"
+app.config["PERMANENT_SESSION_LIFETIME"] = timedelta(days=30)
 
-login_manager = LoginManager()
-login_manager.init_app(app)
-login_manager.login_view = "login"
-login_manager.login_message = "Bitte anmelden"
+Session(app)
 
 VIDEO_PATH = os.getenv('VIDEO_LOCATION') or './videos'
 VIDEO_URL = os.getenv('VIDEO_URL') or '/videos'
@@ -34,27 +33,23 @@ PASSWORD = os.getenv('PASSWORD')
 ######################
 
 
-class User(UserMixin):
-    id = 1
-    authenticated = False
-
-    @property
-    def is_authenticated(self):
-        return self.authenticated
-
-
-# user = User()
-
-
-@login_manager.user_loader
-def load_user(id):
-    return User()
-
-
 class LoginForm(FlaskForm):
     password = PasswordField(label="Passwort eingeben",
                              validators=[DataRequired()])
     submit = SubmitField(label="Einloggen")
+
+
+def login_required(func):
+    @functools.wraps(func)
+    def wrapper():
+        try:
+            if session["authenticated"] == True:
+                return func()
+            else:
+                return redirect(url_for("login"))
+        except KeyError:
+            return redirect(url_for("login"))
+    return wrapper
 
 ######################
 ####### ROUTES #######
@@ -90,6 +85,11 @@ def dashboard():
 @login_required
 def video(fach, vid):
     p = os.path.join(VIDEO_PATH, fach, vid)
+
+    url = VIDEO_URL.split("://")
+    url = f"{url[0]}://{USERNAME}:{PASSWORD}@{url[1]}"
+    print(url)
+
     if os.path.exists(p) and os.path.isfile(p):
         return render_template('Video.html', vid={
             'date': datetime.fromtimestamp(os.path.getctime(p)),
@@ -97,7 +97,7 @@ def video(fach, vid):
             'name': os.path.splitext(vid)[0],
             'file': vid,
             'fach': fach,
-            #            'url': f"{video_url}/{fach}/{vid}" if password and username else f"{video_url}/{fach}/{vid}"
+            'url': url
         })
     else:
         abort(404)
@@ -105,10 +105,11 @@ def video(fach, vid):
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
+    session["authenticated"] = True
     form = LoginForm()
     if form.validate_on_submit():
-        user = try_login(form.password.data)
-        if login_user(user, remember=True):
+        if form.password.data == PASSWORD:
+            session["authenticated"] = True
             flash("Erfolgreich angemeldet")
             return redirect(url_for('dashboard'))
         else:
@@ -116,16 +117,9 @@ def login():
     return render_template("Login.html", form=form)
 
 
-@app.route('/logout')
-@login_required
+@app.route("/logout", methods=["POST"])
 def logout():
-    logout_user()
-    return redirect(url_for("dashboard"))
-
-
-
-def try_login(password):
-    user = User()
-    if password == PASSWORD:
-        user.is_authenticated = True
-    return user
+    try:
+        session["authenticated"] = False
+    except KeyError:
+        pass

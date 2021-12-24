@@ -3,6 +3,7 @@ __pycache__/
 .idea/
 .vscode/
 logs/
+flask_session/
 
 *.swp
 *.pyc
@@ -12,4 +13,3 @@ logs/
 videos/
 video/
 .htpasswd
-

@@ -1,4 +1,4 @@
 Flask
 python-dotenv
 Flask-WTF
-flask-login
+Flask-Session
