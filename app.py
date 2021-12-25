@@ -78,40 +78,38 @@ def index():
 @app.route("/videos")
 @login_required
 def videos():
-    struc = {}
-    for fach in os.scandir(VIDEO_PATH):
-        if not fach.is_dir():
+    files = []
+    for category in os.scandir(VIDEO_PATH):
+        if not category.is_dir():
             continue
 
-        e = []
-        for vid in os.scandir(fach.path):
+        for vid in os.scandir(category.path):
             if not vid.is_file():
                 continue
 
-            e.append({
-                'date': datetime.fromtimestamp(os.path.getctime(vid.path)),
+            files.append({
+                'date': datetime.fromtimestamp(os.path.getctime(vid.path)).strftime('%d.%m.%Y - %H:%M'),
                 'size': os.path.getsize(vid.path),
                 'name': os.path.splitext(vid.name)[0],
                 'file': vid.name,
+                'category': category.name
             })
 
-        struc[fach.name] = sorted(e, key=lambda ele: ele['name'])
-
-    return render_template('Videos.html', files=struc)
+    return render_template('Videos.html', files=files)
 
 
-@app.route('/<string:fach>/<string:vid>')
+@app.route('/videos/<string:category>/<string:vid>')
 @login_required
-def video(fach, vid):
-    p = os.path.join(VIDEO_PATH, fach, vid)
+def video(category, vid):
+    p = os.path.join(VIDEO_PATH, category, vid)
 
     if VIDEO_USERNAME and VIDEO_PASSWORD:
         url = VIDEO_URL.split("://")
         if len(url) != 2:
             abort(500)
-        url = f"{url[0]}://{VIDEO_USERNAME}:{VIDEO_PASSWORD}@{url[1]}/{fach}/{vid}"
+        url = f"{url[0]}://{VIDEO_USERNAME}:{VIDEO_PASSWORD}@{url[1]}/{category}/{vid}"
     else:
-        url = f"{VIDEO_URL}/{fach}/{vid}"
+        url = f"{VIDEO_URL}/{category}/{vid}"
 
     if os.path.exists(p) and os.path.isfile(p):
         return render_template('Video.html', vid={
@@ -119,7 +117,7 @@ def video(fach, vid):
             'size': os.path.getsize(p),
             'name': os.path.splitext(vid)[0],
             'file': vid,
-            'fach': fach,
+            'category': category,
             'url': url
         })
     else:

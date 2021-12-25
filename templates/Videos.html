@@ -1,22 +1,70 @@
-{% extends "BasePage.html" %} {% block content %} {% for key, value in files.items() %}
-<div class="row py-4">
-	<h3>{{ key }}</h3>
-	<hr />
-	{% for row in value|batch(4) %}
-	<div class="row">
-		{% for vid in row %}
-		<section class="col">
-			<div class="border rounded p-4 h-100 shadow-sm">
-				<h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
-				<p class="card-text">Datum: {{ vid.date.strftime('%d.%m.%Y - %H:%M:%S') }}</p>
-				<p class="card-text">Größe: {{ print_size(vid.size) }}</p>
-				<a href="{{ url_for('video', fach=key, vid=vid.file) }}">
-					<button class="btn btn-lg btn-primary" type="button">Öffnen</button>
-				</a>
+{% extends "BasePage.html" %} {% block content %}
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+
+{% raw %}
+<main id="app">
+	<input v-model="query" class="form-control" list="datalist" placeholder="Suche ..." />
+	<datalist id="datalist">
+		<option v-for="el in datalistOptions" v-bind:value="el" />
+	</datalist>
+
+	<section v-for="category of categories" class="row py-4">
+		<h3>{{ category }}</h3>
+		<hr />
+		<div class="row">
+			<div v-for="vid of vidsForCategory(category)" class="col-md-4 col-lg-3 col-sm-12">
+				<div class="border rounded p-4 h-100 shadow-sm">
+					<h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
+					<p class="card-text">Datum: {{ getHumanDate(vid.date) }}</p>
+					<p class="card-text">Größe: {{ getHumanSize(vid.size) }}</p>
+					<p class="card-text">Länge: TODO</p>
+					<a v-bind:href="getVideoUrl(category, vid.file)">
+						<button class="btn btn-lg btn-primary" type="button">Öffnen</button>
+					</a>
+				</div>
 			</div>
-		</section>
-		{% endfor %}
-	</div>
-	{% endfor %}
-</div>
-{% endfor %} {% endblock content %}
+		</div>
+	</section>
+</main>
+{% endraw %}
+
+<script>
+	var app = new Vue({
+		el: "#app",
+		data: {
+			files: {{ files|tojson }},
+			query: ""
+		},
+		methods: {
+			getHumanSize(size) {
+				if (size < 1024*1024*1) return "<1 MB";
+				else return `${Math.floor(size / (1024 * 1024))} MB`;
+			},
+			getHumanDate(date) {
+				return date;
+			},
+			getVideoUrl(category, vid) {
+				return `/videos/${category}/${vid}`;
+			},
+			vidsForCategory(category) {
+				return this.files.filter(x => x.category == category);
+			}
+		},
+		computed: {
+			datalistOptions() {
+				return [...new Set(this.files.flatMap(x => [x.name, x.category]))];
+				// return Object.values(this.files).flatMap(x => [...x.map(y => y.name)]);
+			},
+			categories() {
+				return this.files.map(x => x.category);
+			}
+		},
+		watch: {
+			query: (newVal, oldVal) => {
+
+			}
+		}
+	});
+</script>
+
+{% endblock content %}
