@@ -9,6 +9,9 @@ flask_session/
 *.pyc
 .env
 
+# helper files
+run.sh
+
 # data
 videos/
 video/
