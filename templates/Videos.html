@@ -61,8 +61,8 @@
 		},
 		watch: {
 			query: function (newVal, oldVal) {
-				const q = newVal;
-				this.selectedFiles = this.files.filter(x => x.file.includes(q) || x.category.includes(q));
+				const q = newVal.toLowerCase();
+				this.selectedFiles = this.files.filter(x => x.file.toLowerCase().includes(q) || x.category.toLowerCase().includes(q));
 			}
 		}
 	});

@@ -35,10 +35,8 @@ LOGIN_PASSWORD = os.getenv('LOGIN_PASSWORD')
 def set_context():
     def current_authentication():
         try:
-            print(session["authenticated"])
             return session["authenticated"]
         except KeyError:
-            print("P????")
             return False
     return {"authenticated": current_authentication()}
 
@@ -158,5 +156,4 @@ def logout():
 
 @app.errorhandler(werkzeug.exceptions.HTTPException)
 def handle_http_error(e):
-    print(str(e))
     return render_template("Error.html", e=e)
