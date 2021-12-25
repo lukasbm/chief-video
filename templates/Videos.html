@@ -33,6 +33,7 @@
 		el: "#app",
 		data: {
 			files: {{ files|tojson }},
+			selectedFiles: {{ files|tojson }},
 			query: ""
 		},
 		methods: {
@@ -47,21 +48,21 @@
 				return `/videos/${category}/${vid}`;
 			},
 			vidsForCategory(category) {
-				return this.files.filter(x => x.category == category);
+				return this.selectedFiles.filter(x => x.category == category);
 			}
 		},
 		computed: {
 			datalistOptions() {
 				return [...new Set(this.files.flatMap(x => [x.name, x.category]))];
-				// return Object.values(this.files).flatMap(x => [...x.map(y => y.name)]);
 			},
 			categories() {
-				return this.files.map(x => x.category);
+				return this.selectedFiles.map(x => x.category);
 			}
 		},
 		watch: {
-			query: (newVal, oldVal) => {
-
+			query: function (newVal, oldVal) {
+				const q = newVal;
+				this.selectedFiles = this.files.filter(x => x.file.includes(q) || x.category.includes(q));
 			}
 		}
 	});
