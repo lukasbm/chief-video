@@ -9,8 +9,8 @@ docker build -t boehmls/streaming-server:latest .
 ```
 
 ## Run
-- Development: `docker run --rm -it -p 1935:1935 boehmls/streaming-server:latest`
-- Deployment: `docker run --rm -d -p 1935:1935 --name streaming-server boehmls/streaming-server:latest`
+- Development: `docker run --rm -it -p 3456:1935 -p 3457:8080 boehmls/streaming-server:latest`
+- Deployment: `docker run --rm -d -p 1935:1935 -p 8080:8080 --name streaming-server boehmls/streaming-server:latest`
 
 ## TODO
 - Streamline and optimize images using Docker multistage builds
