@@ -17,6 +17,10 @@ RUN ./configure --with-http_ssl_module --add-module=../nginx-rtmp-module
 RUN make -j 8
 RUN make install
 
-# setup nginx config
+# setup configs
 COPY nginx.conf /etc/nginx/nginx.conf
+EXPOSE 1935
+EXPOSE 80
 
+# entrypoint
+CMD /usr/local/nginx/sbin/nginx

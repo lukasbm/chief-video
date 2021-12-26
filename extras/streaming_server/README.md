@@ -12,3 +12,6 @@ docker build -t boehmls/streaming-server:latest .
 ```bash
 docker run --rm -it boehmls/streaming-server:latest
 ```
+
+## TODO
+- Streamline and optimize images using Docker multistage builds
