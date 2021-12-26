@@ -5,11 +5,11 @@
 		<div class="card-body">
 			<h3 class="card-title">Login</h3>
 			<p class="card-text">
-				<form method="POST" action="/login">
+				<form method="POST" action="/login" class="row g-3">
 					{{ form.csrf_token }}
 					{{ form.password.label }}
-					{{ form.password(size=30, class="form-control") }}
-					{{ form.submit(class="btn btn-primary") }}
+					{{ form.password(size=30, class="form-control col-sm-9") }}
+					{{ form.submit(class="btn btn-primary col-sm") }}
 				</form>
 			</p>
 		</div>

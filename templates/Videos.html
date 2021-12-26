@@ -3,10 +3,15 @@
 
 {% raw %}
 <main id="app">
-	<input v-model="query" class="form-control" list="datalist" placeholder="Suche ..." />
-	<datalist id="datalist">
-		<option v-for="el in datalistOptions" v-bind:value="el" />
-	</datalist>
+	<div class="input-group">
+		<input v-model="query" class="form-control" list="datalist" placeholder="Suche ..." />
+		<div class="input-group-append">
+			<button @click="query = ''" class="btn btn-outline-secondary" type="button">X</button>
+		</div>
+		<datalist id="datalist">
+			<option v-for="el in datalistOptions" v-bind:value="el" />
+		</datalist>
+	</div>
 
 	<section v-for="category of categories" class="row py-4">
 		<h3>{{ category }}</h3>
