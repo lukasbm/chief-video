@@ -56,7 +56,7 @@
 				return [...new Set(this.files.flatMap(x => [x.name, x.category]))];
 			},
 			categories() {
-				return this.selectedFiles.map(x => x.category);
+				return [...new Set(this.selectedFiles.map(x => x.category))];
 			}
 		},
 		watch: {
