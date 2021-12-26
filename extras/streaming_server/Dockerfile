@@ -21,7 +21,7 @@ RUN make install
 COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 EXPOSE 1935
 EXPOSE 8080
-
+EXPOSE 80
 
 # entrypoint
 STOPSIGNAL SIGQUIT
