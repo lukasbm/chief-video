@@ -18,9 +18,11 @@ RUN make -j 8
 RUN make install
 
 # setup configs
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY nginx.conf /usr/local/nginx/conf/nginx.conf
 EXPOSE 1935
 EXPOSE 80
+EXPOSE 8080
 
-# entrypoint
-CMD /usr/local/nginx/sbin/nginx
+
+# entrypoint FIXME
+# ENTRYPOINT [ "/usr/local/nginx/sbin/nginx" ]
