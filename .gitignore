@@ -11,6 +11,7 @@ flask_session/
 
 # helper files
 run.sh
+extras/streaming_server/test.sh
 
 # data
 videos/
