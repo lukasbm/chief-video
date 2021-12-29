@@ -18,7 +18,7 @@ by running `python3 -m flask run` we can start a simple development server for t
 
 ```bash
 docker build -t boehmls/chief-video:latest .
-docker run --rm --it -v <VIDEO_LOCATION>:/app/videos -p <PORT>:5000 -e "VIDEO_URL=<VIDEO_URL>" boehmls/chief-video:latest
+docker run --rm --it -v <VIDEO_PATH>:/app/videos -p <PORT>:5000 -e "VIDEO_URL=<VIDEO_URL>" boehmls/chief-video:latest
 ```
 
 ## Deploying
@@ -67,7 +67,7 @@ The video directory has to be structured as follows:
 
 ## Environment Variables
 
-- `VIDEO_LOCATION`: the (absolute) path on the server where the videos are located. Default `./videos`
+- `VIDEO_PATH`: the (absolute) path on the server where the videos are located. Default `./videos`
 - `VIDEO_URL`: the base url to videos. Since the flask app does not provide the videos themselves, we need another HTTP server to do this job. This variable needs to provide the resources in the same tree structure as presented in the directory section. Either has to be a relative path or a full url (including the "http://")
 - `SECRET_KEY`: required by flask to use secure sessions
 - `LOGIN_PASSWORD`: password for the website
