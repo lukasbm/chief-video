@@ -77,8 +77,8 @@
 			categories() {
 				return [...new Set(this.selectedFiles.map(x => x.category))]
 				.sort((x,y) => {
-					const xName = x.name.toUpperCase(); // ignore upper and lowercase
-					const yName = y.name.toUpperCase(); // ignore upper and lowercase
+					const xName = x.category.toUpperCase(); // ignore upper and lowercase
+					const yName = y.category.toUpperCase(); // ignore upper and lowercase
 					if (xName < yName) {
 						return -1;
 					}
