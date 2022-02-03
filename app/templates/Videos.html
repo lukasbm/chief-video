@@ -22,7 +22,7 @@
 					<h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
 					<p class="card-text">Datum: {{ getHumanDate(vid.date) }}</p>
 					<p class="card-text">Größe: {{ getHumanSize(vid.size) }}</p>
-					<p class="card-text">Länge: TODO</p>
+					<p class="card-text">Länge: {{ vid.duration }}</p>
 					<a v-bind:href="getVideoUrl(category, vid.file)">
 						<button class="btn btn-lg btn-primary" type="button">Öffnen</button>
 					</a>

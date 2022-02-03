@@ -8,6 +8,7 @@ from wtforms.fields.simple import PasswordField, SubmitField
 from wtforms.validators import DataRequired
 from flask_session import Session
 from datetime import timedelta
+from ffprobe import FFProbe
 import werkzeug.exceptions
 
 ######################
@@ -85,12 +86,25 @@ def videos():
             if not vid.is_file():
                 continue
 
+
+            duration = -1
+            try:
+                metadata = FFProbe(vid.path)
+                if len(metadata.streams) < 1 or sum([1 if s.is_video() else 0 for s in metadata.streams]) != len(metadata.streams):
+                    continue
+                if "Duration" not in metadata.metadata:
+                    continue
+                duration = metadata.metadata["Duration"]
+            except:
+                continue
+
             files.append({
                 'date': datetime.fromtimestamp(os.path.getctime(vid.path)).strftime('%d.%m.%Y - %H:%M'),
                 'size': os.path.getsize(vid.path),
                 'name': os.path.splitext(vid.name)[0],
                 'file': vid.name,
-                'category': category.name
+                'category': category.name,
+                'duration': duration
             })
 
     return render_template('Videos.html', files=files)

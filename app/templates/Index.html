@@ -4,10 +4,10 @@
 		<h1 class="display-5 fw-bold">ChiefVideo</h1>
 		<p class="col-md-8 fs-4">Yeet</p>
 		{% if authenticated == False %}
-			<p>
-				Sie scheinen nicht eingeloggt zu sein:
-				<a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-primary">Login</a>
-			</p>
+		<p>
+			Sie scheinen nicht eingeloggt zu sein:
+			<a href="{{ url_for('login') }}" class="btn btn-sm btn-outline-primary">Login</a>
+		</p>
 		{% endif %}
 		<!-- <button class="btn btn-primary btn-lg" type="button">Upload a Video</button> -->
 	</div>
@@ -17,7 +17,7 @@
 	<div class="col-md-6">
 		<div class="h-100 p-4 bg-light border rounded-3">
 			<h2>Videos</h2>
-			<p>TODO</p>
+			<p>Videos anschauen oder hochladen</p>
 			<a href="{{ url_for('videos') }}" class="btn btn-outline-secondary" type="button">Schauen</a>
 			<!-- oder
 			<a href="#">Video hochladen</a> -->
@@ -26,7 +26,7 @@
 	<div class="col-md-6">
 		<div class="h-100 p-4 text-white bg-dark rounded-3">
 			<h2>Streams</h2>
-			<p>TODO</p>
+			<p>Streams anschauen oder hochladen</p>
 			<a href="{{ url_for('streams') }}" class="btn btn-outline-light" type="button">Schauen</a>
 			<!-- oder
 			<a href="#">Stream starten</a> -->

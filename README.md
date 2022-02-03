@@ -82,6 +82,6 @@ The video directory has to be structured as follows:
 - [ ] video upload (in website)
 - [ ] configuration files (to possibly exclude some files or set other information)
 - [ ] allowing to use a remote vide directory
-- [ ] show videolength (using ffmpeg - ffprobe)
+- [x] show videolength (using ffmpeg - ffprobe)
 - [ ] converter for new video files (as not all video formats are supported in every browser)
-- [ ] update design
+- [x] update design
