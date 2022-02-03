@@ -8,11 +8,11 @@ Simple website for videos playing hosted videos
 
 #### Simple development HTTP server
 
-we can provide a simple http server by changing into the video directory and call `python3 -m http.server`
+We can provide a simple http server by creating a `video` directory, changing into this directory and call `python3 -m http.server`.
 
 #### Simple flask server
 
-by running `python3 -m flask run` we can start a simple development server for the web app
+First install the requirements with `pip3 install -r requirements.txt` in the app directory. By running `python3 -m flask run` we can start a simple development server for the web app.
 
 ### Docker
 
