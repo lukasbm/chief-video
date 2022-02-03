@@ -87,16 +87,16 @@ def videos():
                 continue
 
 
-            duration = -1
-            try:
-                metadata = FFProbe(vid.path)
-                if len(metadata.streams) < 1 or sum([1 if s.is_video() else 0 for s in metadata.streams]) != len(metadata.streams):
-                    continue
-                if "Duration" not in metadata.metadata:
-                    continue
-                duration = metadata.metadata["Duration"]
-            except:
-                continue
+            duration = "not available"
+            # try:
+            #     metadata = FFProbe(vid.path)
+            #     if len(metadata.streams) < 1 or sum([1 if s.is_video() else 0 for s in metadata.streams]) != len(metadata.streams):
+            #         continue
+            #     if "Duration" not in metadata.metadata:
+            #         continue
+            #     duration = metadata.metadata["Duration"]
+            # except:
+            #     continue
 
             files.append({
                 'date': datetime.fromtimestamp(os.path.getctime(vid.path)).strftime('%d.%m.%Y - %H:%M'),
