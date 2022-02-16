@@ -13,11 +13,11 @@
 		</datalist>
 	</div>
 
-	<section v-for="category of categories" class="row py-4">
+	<section v-for="category of categories" class="grid py-4">
 		<h3>{{ category }}</h3>
 		<hr />
 		<div class="row">
-			<div v-for="vid of vidsForCategory(category)" class="col-md-4 col-lg-3 col-sm-12">
+			<div v-for="vid of vidsForCategory(category)" class="py-2 col-md-6 col-lg-4 col-xl-3 col-sm-12">
 				<div class="border rounded p-4 h-100 shadow-sm">
 					<h3 class="mb-4 font-weight-normal">{{ vid.name }}</h3>
 					<p class="card-text">Datum: {{ getHumanDate(vid.date) }}</p>
@@ -54,20 +54,7 @@
 			},
 			vidsForCategory(category) {
 				return this.selectedFiles.filter(x => x.category == category)
-				.sort((x,y) => {
-					const xName = x.name.toUpperCase(); // ignore upper and lowercase
-					const yName = y.name.toUpperCase(); // ignore upper and lowercase
-					if (xName < yName) {
-						return -1;
-					}
-					if (xName > yName) {
-						return 1;
-					}
-
-					// names must be equal
-					return 0;
-				}
-				);
+				.sort((x,y) => x.name.localeCompare(y.name, undefined, {numeric: true, sensitivity: 'base'}));
 			}
 		},
 		computed: {
@@ -77,19 +64,12 @@
 			categories() {
 				return [...new Set(this.selectedFiles.map(x => x.category))]
 				.sort((x,y) => {
-					const xName = x.toUpperCase(); // ignore upper and lowercase
-					const yName = y.toUpperCase(); // ignore upper and lowercase
-					if (xName < yName) {
+					const xName = x.toUpperCase();
+					const yName = y.toUpperCase();
+					if (xName < yName || xName > yName)
 						return -1;
-					}
-					if (xName > yName) {
-						return 1;
-					}
-
-					// names must be equal
 					return 0;
-				}
-				);
+				});
 			}
 		},
 		watch: {
