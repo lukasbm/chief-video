@@ -47,14 +47,15 @@
 				else return `${Math.floor(size / (1024 * 1024))} MB`;
 			},
 			getHumanDate(date) {
-				return date;
+				return date; // TODO
 			},
 			getVideoUrl(category, vid) {
 				return `/videos/${category}/${vid}`;
 			},
 			vidsForCategory(category) {
-				return this.selectedFiles.filter(x => x.category == category)
-				.sort((x,y) => x.name.localeCompare(y.name, undefined, {numeric: true, sensitivity: 'base'}));
+				return this.selectedFiles
+					.filter(x => x.category == category)
+					.sort((x,y) => x.name.localeCompare(y.name, undefined, {numeric: true, sensitivity: 'base'}));
 			}
 		},
 		computed: {
@@ -62,14 +63,7 @@
 				return [...new Set(this.files.flatMap(x => [x.name, x.category]))];
 			},
 			categories() {
-				return [...new Set(this.selectedFiles.map(x => x.category))]
-				.sort((x,y) => {
-					const xName = x.toUpperCase();
-					const yName = y.toUpperCase();
-					if (xName < yName || xName > yName)
-						return -1;
-					return 0;
-				});
+				return [...new Set(this.selectedFiles.map(x => x.category))].sort((x,y) => x.localeCompare(y));
 			}
 		},
 		watch: {
@@ -80,5 +74,4 @@
 		}
 	});
 </script>
-
 {% endblock content %}
